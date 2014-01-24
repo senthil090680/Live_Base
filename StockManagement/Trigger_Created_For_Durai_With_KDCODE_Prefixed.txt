@@ -1,0 +1,26 @@
+DELIMITER $$
+
+DROP TRIGGER /*!50032 IF EXISTS */ `base`.`pingtrigger`$$
+
+CREATE
+    /*!50017 DEFINER = 'root'@'localhost' */
+    TRIGGER `pingtrigger` AFTER INSERT ON `dailyloadconfirm` 
+    FOR EACH ROW BEGIN        
+	DECLARE K DATETIME;
+	DECLARE DateVal DATE;
+	SET @K = SPLIT_STR(NEW.confirmdatetime,' ',1);
+	SET @DEVCODE = SPLIT_STR(NEW.device_code,'KD001',2);	
+	SET @vardomain = CONCAT('%',LOWER(TRIM(@K)),'%');
+    
+	SET @devicename = (SELECT id FROM device_master WHERE device_code =  @DEVCODE);
+	SET @vehiclename = (SELECT id FROM vehicle_master WHERE vehicle_code =  NEW.vehicle_code);
+        SET @dsrid      = (SELECT dsr_code FROM cycle_assignment WHERE device_id = @devicename AND vehicle_id = @vehiclename AND DATE LIKE @vardomain  ORDER BY id DESC);
+	SET @DateVal    = (SELECT DATE FROM cycle_assignment WHERE device_id = @devicename AND vehicle_id = @vehiclename AND DATE LIKE @vardomain ORDER BY id DESC);
+	INSERT INTO test_trigger SET device_code = @DEVCODE,dateval=@DateVal,dsrid=@dsrid,vehicle_code=@vehiclename,seqNo=NEW.seqNo;
+        IF NEW.confirm_flag = 'yes' THEN
+	CALL pingproc(@DEVCODE,@DateVal,@dsrid,NEW.seqNo);
+	END IF;
+END;
+$$
+
+DELIMITER ;

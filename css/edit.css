@@ -1,0 +1,487 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/* CUSTOMER VISIT TRACKING STARTS HERE */
+
+.condaily th, .condailynorec th, .condailytrack th {
+	padding:2px 5px 0 5px;
+	font-weight:bold;
+	font-size:14px;
+	color:#000;
+}
+
+.condaily td, .condailynorec td, .condailytrack td {
+	padding:2px 5px 0 5px;
+	background:#fff;
+	border-collapse:collapse;
+	padding-left:10px;
+	color:#000;
+	font-size:14px;
+}
+
+.condaily tbody tr:hover td, .condailynorec tbody tr:hover td, .condailytrack tbody tr:hover td {
+	background: #c1c1c1;
+}
+
+/* CUSTOMER VISIT TRACKING ENDS HERE */
+
+/* CUSTOMER VISIT TRACKING CSS STARTS HERE */
+
+.condailytrack {
+width:100%;
+text-align:left;
+height:295px;
+border-collapse:collapse;
+background:#a09e9e;
+margin-left:auto;
+margin-right:auto;
+border-radius:10px;
+overflow:scroll;
+overflow-x:hidden;
+}
+
+/* CUSTOMER VISIT TRACKING ENDS HERE */
+
+
+
+
+
+/* STARTS HERE WRITTEN ON 27/05/2013 */
+
+#mytableformmetric{
+background:#fff;
+width:95%;
+margin-left:auto;
+margin-right:auto;
+height:460px;
+}
+
+/* ENDS HERE WRITTEN ON 27/05/2013 */
+
+.headerdev {
+	margin-left:auto;
+	margin-right:auto;
+	width:99%;
+	height:60px;
+	padding:10px 0px 10px 0px;
+	border-radius:10px;
+	background:#C1C1C1;
+}
+#tablestr {
+	width:99%;
+	margin-left:auto;
+	margin-right:auto;
+}
+.statictable {
+	width:36%;
+	float:left;
+	padding-top:10px;
+}
+.statictable2 {
+	width:36%;
+	float:left;
+	padding-top:10px;
+}
+.scrolltab {
+	width:64%;
+	margin:0 auto;
+	float:right;
+	padding-top:10px;
+	overflow:scroll;
+	overflow-x: hidden;
+}
+.scrolltab2 {
+	width:64%;
+	margin:0 auto;
+	float:right;
+	padding-top:10px;
+	overflow:scroll;
+	overflow-x: hidden;
+}
+.tablebut {
+	width:90%;
+	clear:both;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+/* Device Transactions CSS Ends here */
+
+.condailynorec{
+	width:100%;
+	text-align:left;
+	height:100px;
+	border-collapse:collapse;
+	background:#a09e9e;
+	margin-left:auto;
+	margin-right:auto;
+	border-radius:10px;
+	overflow:scroll;
+	overflow-x:hidden;
+}
+#containerdaily {
+	padding:0px;
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+* {
+	padding:0px;
+	margin:0px;
+}
+#container {
+	padding:0px;
+	width:50%;
+	margin-left:auto;
+	margin-right:auto;
+}
+#containercycle{
+	padding:0px;
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+}
+#containerpr {
+	padding:0px;
+	width:60%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#containerBD{
+ padding:0px;
+ width:100%;
+ margin-left:123px;
+ margin-right:auto;
+ }
+#mytable {
+	width:40%;
+	height:150px;
+	margin-left:auto;
+	margin-right:auto;
+	background:#FFFFFF;
+}
+#mytablecycle {
+	background:#fff;
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+	height:220px;
+}
+
+#mytableproduct {
+	background:#fff;
+	width:60%;
+	margin-left:auto;
+	margin-right:auto;
+	height:180px;
+}
+
+#mytablescheme{
+background:#fff;
+width:50%;
+margin-left:auto;
+margin-right:auto;
+height:160px;
+}
+
+
+#mytableformgr2{
+background:#fff;
+width:95%;
+margin-left:auto;
+margin-right:auto;
+height:450px;
+}
+
+#mytableformgr{
+background:#fff;
+width:95%;
+margin-left:auto;
+margin-right:auto;
+height:200px;
+}
+
+
+.condaily{
+width:100%;
+text-align:left;
+height:150px;
+border-collapse:collapse;
+background:#a09e9e;
+margin-left:auto;
+margin-right:auto;
+border-radius:10px;
+overflow:scroll;
+overflow-x:hidden;
+}
+
+.con3{
+width:100%;
+text-align:left;
+border-collapse:collapse;
+background:#a09e9e;
+margin-left:auto;
+margin-right:auto;
+border-radius:10px;
+}
+
+
+
+.con2{
+	width:80%;
+	text-align:left;
+	border-collapse:collapse;
+	background:#a09e9e;
+	margin-left:auto;
+	margin-right:auto;
+	border-radius:10px;
+}
+.con {
+	width:100%;
+	text-align:left;
+	border-collapse:collapse;
+	background:#a09e9e;
+	margin-left:auto;
+	margin-right:auto;
+	border-radius:10px;
+}
+.con th,.con2 th,.con3 th {
+	width:22%;
+	padding:2px 5px 0 5px;
+	font-weight:bold;
+	font-size:13px;
+	color:#000;
+}
+.con td,.con2 td,.con3 td  {
+	padding:2px 5px 0 5px;
+	background:#fff;
+	border-collapse:collapse;
+	color: #000;
+	font-size:13px;
+}
+.con tbody tr:hover td,.con2 tbody tr:hover td,.con3 tbody tr:hover td {
+	background: #c1c1c1;
+}
+
+
+.paginationfile {
+	margin-left:auto;
+	margin-right:auto;
+	padding-top:5px;
+	font-size:14px;
+	font-weight:bold;
+	color:#000;
+}
+
+#rounded-corner {
+	width:80%;
+	text-align:left;
+	border-collapse:collapse;
+	background:#a09e9e;
+	margin-left:auto;
+	margin-right:auto;
+	border-radius:10px;
+}
+#rounded-corner th {
+	padding:4px 10px 0 10px;
+	width:50%;
+	font-weight:bold;
+	font-size:14px;
+	color:#000;
+}
+#rounded-corner td {
+	padding:4px 10px 0 10px;
+	background:#fff;
+	border-top: 1px solid #666;
+	color: #000;
+	font-size:14px;
+}
+#rounded-corner tbody tr:hover td {
+	background: #c1c1c1;
+}
+.rounded {
+	cursor: pointer;
+}
+.mcf {
+	padding-top:10px;
+}
+.pclr {
+	color:#900;
+	font-size:14px;
+	font-weight:bold;
+}
+.align {
+	padding-left:20px;
+}
+
+.headings {
+	background:#a09e9e;
+	width:40%;
+	margin-left:auto;
+	margin-right:auto;
+	height:25px;
+	padding-top:5px;
+	border-radius:6px;
+	font-weight:bold;
+	font-size:14px;
+}
+
+.headingsc{
+	background:#a09e9e;
+	width:50%;
+	margin-left:auto;
+	margin-right:auto;
+	height:25px;
+	padding-top:5px;
+	border-radius:6px;
+	font-weight:bold;
+	font-size:14px;
+}
+
+.headingsgr{
+	background:#a09e9e;
+	width:95%;
+	margin-left:auto;
+	margin-right:auto;
+	height:25px;
+	padding-top:5px;
+	border-radius:6px;
+	font-weight:bold;
+	font-size:14px;
+}
+.fonts{
+font-size:20px;
+color:#000000;
+}
+.headfile{
+height:50px;
+margin-left:auto;
+margin-right:auto;
+padding-left:150px;
+padding-top:10px;
+}
+
+.msg {
+	margin-left:auto;
+	padding-top:10px;
+	height:30px;
+	margin-right:auto;
+	background:#999999;
+	width:80%;
+	border-radius:10px;
+}
+.msg2 {
+	margin-left:auto;
+	padding-top:10px;
+	height:30px;
+	margin-right:auto;
+	background:#999999;
+	width:30%;
+	border-radius:10px;
+}
+
+
+/*setupparam*/
+
+#mainareasystemParam {
+	width:100%;
+	height:450px;
+	background:#ebebeb;
+}
+
+.form1{
+ width:100%;
+ clear:both;
+ }
+.innerform{
+ width:100%;
+ }
+.innerforml{
+ width:50%;
+ float:left;
+ } 
+.innerformr{
+ width:50%;
+ float:right;
+ } 
+.paraforms{
+width:100%;
+background:#999999;
+}
+
+.formleft{
+ width:50%;
+ float:left;
+ }
+.formright{
+float:right;
+width:50%;
+}
+
+.leftfield{
+float:left;
+width:90%;
+}
+
+.rightfield{
+float:right;
+width:90%;
+}
+
+
+/*New*/
+
+#mytableformgrkd{
+background:#fff;
+width:95%;
+margin-left:auto;
+margin-right:auto;
+height:300px;
+}
+
+#containercycle{
+	padding:0px;
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#mytablecycle {
+	background:#fff;
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+	height:220px;
+}
+
+#mytableformmetric{
+background:#fff;
+width:95%;
+margin-left:auto;
+margin-right:auto;
+height:460px;
+}
+
+.condailytrack {
+width:100%;
+text-align:left;
+height:295px;
+border-collapse:collapse;
+background:#a09e9e;
+margin-left:auto;
+margin-right:auto;
+border-radius:10px;
+overflow:scroll;
+overflow-x:hidden;
+}
+
+
+
+
+
+
+
+

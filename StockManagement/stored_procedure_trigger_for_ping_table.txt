@@ -1,0 +1,134 @@
++++++++++++++++++++++++
+SPLIT FUNCTION CREATION
++++++++++++++++++++++++
+
+CREATE FUNCTION SPLIT_STR(
+  X VARCHAR(255),
+  delim VARCHAR(12),
+  pos INT
+)
+RETURNS VARCHAR(255)
+RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(X, delim, pos),
+       LENGTH(SUBSTRING_INDEX(X, delim, pos -1)) + 1),
+       delim, '');
+
+
+
+++++++++++++++++++++++
+TRIGGER FOR PING TABLE
+++++++++++++++++++++++
+
+
+DELIMITER $$
+
+DROP TRIGGER /*!50032 IF EXISTS */ `base`.`pingtrigger`$$
+
+CREATE
+    /*!50017 DEFINER = 'root'@'localhost' */
+    TRIGGER `pingtrigger` AFTER INSERT ON `dailyloadconfirm` 
+    FOR EACH ROW BEGIN        
+	DECLARE K DATETIME;
+	DECLARE DateVal DATE;
+	SET @K = SPLIT_STR(NEW.confirmdatetime,' ',1);
+	SET @vardomain = CONCAT('%',LOWER(TRIM(@K)),'%');
+    
+	SET @devicename = (SELECT id FROM device_master WHERE device_code =  NEW.device_code);
+	SET @vehiclename = (SELECT id FROM vehicle_master WHERE vehicle_code =  NEW.vehicle_code);
+        SET @dsrid      = (SELECT dsr_code FROM cycle_assignment WHERE device_id = @devicename AND vehicle_id = @vehiclename AND DATE LIKE @vardomain  ORDER BY id DESC);
+	SET @DateVal    = (SELECT DATE FROM cycle_assignment WHERE device_id = @devicename AND vehicle_id = @vehiclename AND DATE LIKE @vardomain ORDER BY id DESC);
+	/*INSERT INTO test_trigger SET device_code = NEW.device_code,dateval=@DateVal,dsrid=@dsrid,vehicle_code=@vehiclename,seqNo=NEW.seqNo;*/
+        IF NEW.confirm_flag = 'yes' THEN
+	CALL pingproc(NEW.device_code,@DateVal,@dsrid,NEW.seqNo);
+	END IF;
+END;
+$$
+
+DELIMITER ;
+
+
+++++++++++++++++++++++++++++++++
+PROCEDURE FOR DAILYSTOCK LOADING
+++++++++++++++++++++++++++++++++
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS `base`.`pingproc`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pingproc`(IN device_id VARCHAR(50), IN starttime DATETIME, IN dsrid VARCHAR(50),IN seqNum VARCHAR(50))
+BEGIN	
+	DECLARE kdcode VARCHAR(50);
+	DECLARE dateval DATETIME;
+	DECLARE productcode VARCHAR(50);
+	DECLARE uomval VARCHAR(50);
+	DECLARE load_id INT(50);
+	DECLARE load_val VARCHAR(50);	
+	DECLARE no_more_rows INT;
+	DECLARE issno VARCHAR(50);
+	DECLARE splitiss VARCHAR(50);
+	DECLARE addedissno VARCHAR(50);
+	DECLARE isssplit INT(50);
+	DECLARE loop_cntr INT DEFAULT 0;
+	DECLARE num_rows INT DEFAULT 0;
+	DECLARE rowcnt VARCHAR(50);
+	DECLARE balqty VARCHAR(50);
+	DECLARE updatedqty VARCHAR(50);
+	DECLARE isscheck VARCHAR(50);
+	DECLARE productdesc VARCHAR(50);
+	DECLARE datval DATE;	
+
+	DECLARE dailystock_cur CURSOR FOR
+	SELECT id,KD_Code,DATE,Product_code,UOM,Loaded_Qty FROM dailystockloading WHERE DSR_Code = dsrid AND Load_Sequence_No = seqNum AND DATE >= starttime AND Confirmed_Qty = '';
+	
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET no_more_rows = 1;	
+
+	SET datval = SPLIT_STR(starttime,' ',1);
+	
+	SET issno = (SELECT issue_no FROM parameters);
+	
+	SET isssplit = (SELECT SUBSTRING(issno,4)); -- substring starts from 4th position and upto the end of the string
+	
+	SET addedissno = isssplit + 1;
+	
+	SET splitiss = (SELECT CONCAT('ISS',addedissno)); -- this function concatenate the string with ISS and the addedissno value
+	
+	/*INSERT INTO test_trigger SET device_code = device_id,dateval=datval,dsrid=dsrid,seqNo=seqNum;*/
+
+	UPDATE parameters SET issue_no = splitiss;	
+	
+	OPEN dailystock_cur;
+	SELECT FOUND_ROWS() INTO num_rows;
+	
+	the_loop : LOOP
+	FETCH dailystock_cur INTO load_id,kdcode,dateval,productcode,uomval,load_val;
+	IF no_more_rows = 1 THEN
+		LEAVE the_loop;
+	END IF;	
+	
+	UPDATE dailystockloading SET Confirmed_Qty = load_val,download_status = 2 WHERE id = load_id;
+	
+	SET rowcnt = (SELECT ROW_COUNT());	
+	
+	IF rowcnt = 1 THEN
+	   SET isscheck = (SELECT CONCAT('-',load_val));	
+		INSERT INTO stock_issue (KD_Code,DATE,Transaction_number,DSR_Code,Product_code,UOM,issued_quantity,confirmed_quantity,
+		confirmation_flag,confirmation_date_time) VALUES (kdcode,datval,splitiss,dsrid,productcode,uomval,isscheck,isscheck,'Yes',NOW());
+		
+	 IF EXISTS (SELECT BalanceQty FROM opening_stock_update WHERE Product_code = productcode AND KD_Code = kdcode ORDER BY id DESC) THEN
+	  SET balqty  = (SELECT BalanceQty FROM opening_stock_update WHERE Product_code = productcode AND KD_Code = kdcode ORDER BY id DESC LIMIT 1);
+	  SET updatedqty = balqty - load_val;
+	  SET productdesc  = (SELECT Product_description1 FROM product WHERE Product_code = productcode LIMIT 1);
+	INSERT INTO opening_stock_update SET DATE = datval,StockDateTime=NOW(),TransactionType='Issues',TransactionNo=splitiss,UOM1=uomval,
+	TransactionQty=load_val,BalanceQty=updatedqty,AddedFirstTime='Y',Product_code=productcode,Product_description=productdesc,KD_Code=kdcode;
+        END IF;
+		
+	ELSE 	
+		SET rowcnt = 0;
+	END IF;
+	
+	SET loop_cntr = loop_cntr + 1;
+	END LOOP the_loop;
+	CLOSE dailystock_cur;	
+				
+END$$
+
+DELIMITER ;

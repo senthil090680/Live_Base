@@ -1,0 +1,2 @@
+schtasks /delete /tn KD_base_cronUpload  /f 
+schtasks /create /s TTSSYS016 /RU Pradeep.P /RP tts.com2014 /tn KD_base_cronUpload /tr "c:\xampp\htdocs\base\functions\cronupload.bat" /sc daily /st 18:05:03 /sd 05/22/2013

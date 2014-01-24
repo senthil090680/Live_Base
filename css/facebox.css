@@ -1,0 +1,56 @@
+#facebox {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  text-align: left;
+  
+}
+
+#facebox .popup {
+  position: relative;
+ }
+
+#facebox table {
+  width:500px;
+  margin:0 auto;
+  border-collapse: collapse;
+}
+
+#facebox .body {
+  padding:10px;
+  border:8px solid #666666;
+  background:#fff;
+  width:370px;
+}
+
+#facebox .loading {
+  text-align: center;
+}
+
+#facebox .image {
+  text-align: center;
+}
+
+#facebox img {
+  border: 0;
+}
+
+#facebox .footer {
+  padding-top: 5px;
+  margin-top: 0px;
+  text-align: right;
+}
+
+#facebox .tl, #facebox .tr, #facebox .bl, #facebox .br {
+  height: 10px;
+  width: 10px;
+  overflow: hidden;
+  padding: 0;
+}
+.close{
+ position:absolute;
+ top:4px;
+ padding-left:0px;
+ }
